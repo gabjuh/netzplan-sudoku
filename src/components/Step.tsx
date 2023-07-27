@@ -34,6 +34,7 @@ const Step: React.FC<Step> = ({
   interface sizeStyle {
     width: string;
     height: string;
+    minWidth: string;
   }
 
   interface posXStyle {
@@ -58,6 +59,7 @@ const Step: React.FC<Step> = ({
   const sizeStyle: sizeStyle = {
     width: size + 'px',
     height: size + 'px',
+    minWidth: size + 'px',
   };
 
   return (
@@ -68,39 +70,26 @@ const Step: React.FC<Step> = ({
     >
       <table>
         <tr>
-          <td className="border text-3xl" style={sizeStyle}>{faz}</td>
+          <td className="border text-3xl w-[100%]" style={sizeStyle}>{faz}</td>
           <td></td>
-          <td className="border text-3xl" style={sizeStyle}>{fez}</td>
+          <td className="border text-3xl w-[100%]" style={sizeStyle}>{fez}</td>
         </tr>
         <tr>
-          <td className="border text-3xl" style={sizeStyle}>{ps}</td>
-          <td className="border border-r-0 text-3xl" style={sizeStyle}>{pn}</td>
-          <td className="border border-l-0" style={sizeStyle}></td>
+          <td className="border text-3xl w-[100%]" style={sizeStyle}>{ps}</td>
+          <td className="border border-r-0 text-3xl w-[100%]" style={sizeStyle}>{pn}</td>
+          <td className="border border-l-0 w-[100%]" style={sizeStyle}></td>
         </tr>
         <tr>
-          <td className="border text-3xl" style={sizeStyle}>{pd}</td>
-          <td className="border text-3xl" style={sizeStyle}>{gp}</td>
-          <td className="border text-3xl" style={sizeStyle}>{fp}</td>
+          <td className="border text-3xl w-[100%]" style={sizeStyle}>{pd}</td>
+          <td className="border text-3xl w-[100%]" style={sizeStyle}>{gp}</td>
+          <td className="border text-3xl w-[100%]" style={sizeStyle}>{fp}</td>
         </tr>
         <tr>
-          <td className="border text-3xl" style={sizeStyle}>{saz}</td>
+          <td className="border text-3xl w-[100%]" style={sizeStyle}>{saz}</td>
           <td></td>
-          <td className="border text-3xl" style={sizeStyle}>{sez}</td>
+          <td className="border text-3xl w-[100%]" style={sizeStyle}>{sez}</td>
         </tr>
       </table>
-      {/* <p>{arrowTo && arrowTo}</p> */}
-      <Arrow 
-        posX={posX}
-        posY={posY}
-        // arrowTo={arrowTo && arrowTo}
-        arrowToPosX={arrowTo?.map((arrow) => process.filter(step => step.ps === arrow)[0].posX)}
-        arrowToPosY={arrowTo?.map((arrow) => process.filter(step => step.ps === arrow)[0].posY)}
-        size={size}
-        posStep={posStep}
-      />
-      {/* {arrowTo && arrowTo.length > 0 && arrowTo.map((arrow, index) => (
-        <span key={index}>{arrow}</span>
-      ))} */}
     </div>
   )
 }
