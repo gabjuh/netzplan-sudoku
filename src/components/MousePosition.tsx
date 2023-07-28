@@ -12,7 +12,7 @@ const MousePosition: React.FC<IMousePosition> = ({
   
   return (
     <div 
-      className="pt-1 z-[50] absolute right-0" 
+      className="pt-1 z-[50]" 
     >
       <small>
         <div>
