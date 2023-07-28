@@ -1,32 +1,32 @@
 
-interface Step {
+export interface IStep {
   posX: number;
   posY: number;
-  faz: number;
-  fez: number;
+  faz: number | string;
+  fez: number | string;
   ps: string;
   pn: string;
   pd: number;
-  gp: number;
-  fp: number;
-  saz: number;
-  sez: number;
-  arrowTo: string[] | undefined;
+  gp: number | string;
+  fp: number | string;
+  saz: number | string;
+  sez: number | string;
+  arrowTo?: string[];
 }
 
-const Step: React.FC<Step> = ({
+const Step: React.FC<IStep> = ({
   posX,
   posY,
   faz,
   fez,
   ps,
-  pn,
+  // pn,
   pd,
   gp,
   fp,
   saz,
   sez,
-  arrowTo,
+  // arrowTo,
 }) => {
 
   interface sizeStyle {
@@ -47,11 +47,11 @@ const Step: React.FC<Step> = ({
   const posStep: number = 280;
   
   const posXStyle: posXStyle = {
-    left: `${posX + ((posX - 1) * posStep)}px`,
+    left: `${posX && posX + ((posX - 1) * posStep)}px`,
   };
 
   const posYStyle: posYStyle = {
-    top: `${posY + ((posY - 1) * posStep)}px`,
+    top: `${posY && posY + ((posY - 1) * posStep)}px`,
   };
   
   const sizeStyle: sizeStyle = {
@@ -67,45 +67,47 @@ const Step: React.FC<Step> = ({
       style={{...posXStyle, ...posYStyle}}
     >
       <table>
-        <tr>
-          {/* <td className="border text-3xl w-[100%]" style={sizeStyle}>{faz}</td> */}
-          <td className="border text-3xl w-[100%]" style={sizeStyle}>
-            <input type="text" maxLength={2} min="0" step="1" className="w-10 text-center bg-transparent" value={faz} readOnly/>
-          </td>
-          <td></td>
-          <td className="border text-3xl w-[100%]" style={sizeStyle}>
-            <input type="text" maxLength={2} min="0" step="1" className="w-10 text-center bg-transparent" value={fez}/>  
-          </td>
-        </tr>
-        <tr>
-          <td className="border text-3xl w-[100%]" style={sizeStyle}>
-            <input type="text" maxLength={2} min="0" step="1" className="w-10 text-center bg-transparent" value={ps}/>
-          </td>
-          <td className="border border-r-0 text-3xl w-[100%]" style={sizeStyle}>
-            {/* <input type="text" maxLength={2} min="0" step="1" className="w-10 text-center bg-transparent" value={pn}/> */}
-          </td>
-          <td className="border border-l-0 w-[100%]" style={sizeStyle}></td>
-        </tr>
-        <tr>
-          <td className="border text-3xl w-[100%]" style={sizeStyle}>
-            <input type="text" maxLength={2} min="0" step="1" className="w-10 text-center bg-transparent" value={pd}/>
-          </td>
-          <td className="border text-3xl w-[100%]" style={sizeStyle}>
-            <input type="text" maxLength={2} min="0" step="1" className="w-10 text-center bg-transparent" value={gp}/>
-          </td>
-          <td className="border text-3xl w-[100%]" style={sizeStyle}>
-            <input type="text" maxLength={2} min="0" step="1" className="w-10 text-center bg-transparent" value={fp}/>
-          </td>
-        </tr>
-        <tr>
-          <td className="border text-3xl w-[100%]" style={sizeStyle}>
-            <input type="text" maxLength={2} min="0" step="1" className="w-10 text-center bg-transparent" value={saz}/>
-          </td>
-          <td></td>
-          <td className="border text-3xl w-[100%]" style={sizeStyle}>
-            <input type="text" maxLength={2} min="0" step="1" className="w-10 text-center bg-transparent" value={sez}/>
-          </td>
-        </tr>
+        <tbody>
+          <tr>
+            {/* <td className="border text-3xl w-[100%]" style={sizeStyle}>{faz}</td> */}
+            <td className="border text-3xl w-[100%]" style={sizeStyle}>
+              <input type="text" maxLength={2} min="0" step="1" className="w-10 text-center bg-transparent" defaultValue={faz}/>
+            </td>
+            <td></td>
+            <td className="border text-3xl w-[100%]" style={sizeStyle}>
+              <input type="text" maxLength={2} min="0" step="1" className="w-10 text-center bg-transparent" defaultValue={fez}/>  
+            </td>
+          </tr>
+          <tr>
+            <td className="border text-3xl w-[100%]" style={sizeStyle}>
+              <input type="text" maxLength={2} min="0" step="1" className="w-10 text-center bg-transparent" defaultValue={ps}/>
+            </td>
+            <td className="border border-r-0 text-3xl w-[100%]" style={sizeStyle}>
+              {/* <input type="text" maxLength={2} min="0" step="1" className="w-10 text-center bg-transparent" defaultValue={pn}/> */}
+            </td>
+            <td className="border border-l-0 w-[100%]" style={sizeStyle}></td>
+          </tr>
+          <tr>
+            <td className="border text-3xl w-[100%]" style={sizeStyle}>
+              <input type="text" maxLength={2} min="0" step="1" className="w-10 text-center bg-transparent" defaultValue={pd} />
+            </td>
+            <td className="border text-3xl w-[100%]" style={sizeStyle}>
+              <input type="text" maxLength={2} min="0" step="1" className="w-10 text-center bg-transparent" defaultValue={gp}/>
+            </td>
+            <td className="border text-3xl w-[100%]" style={sizeStyle}>
+              <input type="text" maxLength={2} min="0" step="1" className="w-10 text-center bg-transparent" defaultValue={fp}/>
+            </td>
+          </tr>
+          <tr>
+            <td className="border text-3xl w-[100%]" style={sizeStyle}>
+              <input type="text" maxLength={2} min="0" step="1" className="w-10 text-center bg-transparent" defaultValue={saz}/>
+            </td>
+            <td></td>
+            <td className="border text-3xl w-[100%]" style={sizeStyle}>
+              <input type="text" maxLength={2} min="0" step="1" className="w-10 text-center bg-transparent" defaultValue={sez}/>
+            </td>
+          </tr>
+        </tbody>
       </table>
     </div>
   )
