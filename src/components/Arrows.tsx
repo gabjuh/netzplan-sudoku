@@ -7,6 +7,7 @@ interface Arrows {
   arrowTo: string[] | undefined;
   size: number;
   posStep: number;
+  handleArrowClick: (arrowId: string) => void;
 }
 
 const Arrows: React.FC<Arrows> = ({
@@ -14,7 +15,8 @@ const Arrows: React.FC<Arrows> = ({
   posY,
   arrowTo,
   size,
-  posStep
+  posStep,
+  handleArrowClick
 }) => {
   return (
     <>
@@ -22,10 +24,12 @@ const Arrows: React.FC<Arrows> = ({
         posX={posX}
         posY={posY}
         // arrowTo={arrowTo && arrowTo}
+        ps={process.filter(step => step.posX === posX && step.posY === posY)[0].ps}
         arrowToPosX={arrowTo?.map((arrow) => process.filter(step => step.ps === arrow)[0].posX)}
         arrowToPosY={arrowTo?.map((arrow) => process.filter(step => step.ps === arrow)[0].posY)}
         size={size}
         posStep={posStep}
+        handleArrowClick={handleArrowClick}
       />
     </>
   )
