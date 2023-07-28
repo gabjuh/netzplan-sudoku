@@ -3,11 +3,13 @@ import React from 'react'
 interface Arrow {
   posX: number;
   posY: number;
+  ps: string;
   // arrowTo: string[] | undefined;
   arrowToPosX: number[] | undefined;
   arrowToPosY: number[] | undefined;
   size: number;
   posStep: number;
+  handleArrowClick: (arrowId: string) => void;
 }
 
 const Arrow: React.FC<Arrow> = ({
@@ -16,10 +18,11 @@ const Arrow: React.FC<Arrow> = ({
   // // arrowTo,
   // arrowToPosX,
   // arrowToPosY,
+  ps,
   size,
-  posStep
+  posStep,
+  handleArrowClick
 }) => {
-
   
   // Draw an arrow, that ends with the arrow in the right direction
   // The arrow is drawn from the startCoords to the endCoords
@@ -33,11 +36,32 @@ const Arrow: React.FC<Arrow> = ({
           ${breakPoints}
           L ${endCoords[0]} ${endCoords[1]} 
           L ${endCoords[0]} ${endCoords[1] - 1.1} 
-          L ${endCoords[0] + 1.2} ${endCoords[1]} 
+          L ${endCoords[0] + 1.1} ${endCoords[1]} 
           L ${endCoords[0]} ${endCoords[1] + 1.1}
           L ${endCoords[0]} ${endCoords[1]}
         `}
-          stroke={`${red ? '#f00' : '#ff0'}`} stroke-width="0.3" fill="none" />
+          stroke={`${red ? '#f00' : '#ff0'}`} strokeWidth="0.3" fill="none" 
+          onClick={() => handleArrowClick(ps)}
+          className="cursor-pointer"
+          />
+
+      </>
+    )
+  }
+
+  const drawArrowRightRelative = (startCoords: number[], endCoords: number[], breakPoints: string, red = false) => {
+    return (
+      <>
+        <path d={`
+          M ${startCoords[0]} ${startCoords[1]} 
+          ${breakPoints}
+          l ${endCoords[0]} ${endCoords[1]} 
+          
+        `}
+          stroke={`${red ? '#f00' : '#ff0'}`} strokeWidth="0.3" fill="none" 
+          onClick={() => handleArrowClick(ps)}
+          className="cursor-pointer"
+        />
       </>
     )
   }
@@ -52,9 +76,11 @@ const Arrow: React.FC<Arrow> = ({
           L ${endCoords[0]} ${endCoords[1] + 1.1} 
           L ${endCoords[0] - 1.1} ${endCoords[1]} 
           L ${endCoords[0]} ${endCoords[1]} 
-          
         `}
-          stroke={`${red ? '#f00' : '#ff0'}`} stroke-width="0.3" fill="none" />
+          stroke={`${red ? '#f00' : '#ff0'}`} strokeWidth="0.3" fill="none" 
+          onClick={() => handleArrowClick(ps)}
+          className="cursor-pointer"
+        />
       </>
     )
   }
@@ -70,7 +96,10 @@ const Arrow: React.FC<Arrow> = ({
           L ${endCoords[0] - 1.1} ${endCoords[1]} 
           L ${endCoords[0]} ${endCoords[1]}          
         `}
-          stroke={`${red ? '#f00' : '#ff0'}`} stroke-width="0.3" fill="none" />
+          stroke={`${red ? '#f00' : '#ff0'}`} strokeWidth="0.3" fill="none" 
+          onClick={() => handleArrowClick(ps)}
+          className="cursor-pointer"
+        />
       </>
     )
   }
@@ -78,15 +107,17 @@ const Arrow: React.FC<Arrow> = ({
   return (
     <svg 
       xmlns="http://www.w3.org/2000/svg" viewBox={`0 0 100 100`} 
-      className="absolute top-0 mx-auto"
+      className="absolute top-0"
       style={{
         left: `0px`,
         height: `${(4 * size) + (2 * posStep) + 50}px`,
         width: `${(3 * size) * 5 + 2 * posStep}px`,
       }}
     >
+      {/* <path d="M 0 0 l 10 10" stroke="green"></path> */}
       {/* A - B */}
       {drawArrowRight([-9, 14.6], [3, 14.6], '', true )}
+      {/* {drawArrowRightRelative([-9, 14.6], [11, 0], '', true )} */}
       {/* B - I */}
       {drawArrowRight([-9, 49.3], [38, 49.3], '' )}
       {/* C - E */}
@@ -94,7 +125,7 @@ const Arrow: React.FC<Arrow> = ({
       {/* D - G */}
       {drawArrowRight([26, 11.5], [38, 11.5], '', true )}
       {/* D - H */}
-      {drawArrowRight([15, 28], [73, 81], 'L 15 68 L 67 68 L 67 81' )}
+      {drawArrowRight([15, 28], [73, 81], 'L 15 66.5 L 67 66.5 L 67 81' )}
       {/* E - F */}
       {drawArrowRight([26, 87], [38, 87], '' )}
       {/* E - G */}
