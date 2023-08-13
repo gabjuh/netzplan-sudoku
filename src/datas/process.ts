@@ -11,7 +11,18 @@ const process = [
     fp: 0,
     saz: 0,
     sez: 5,
-    arrowTo: ["D"]
+    // arrowTo: ["D"]
+    arrowTo: [{
+      id: "D",
+      pathCoords: {
+        start: [97, 224],
+        breakpoints: [
+          [50, 200],
+          [200, 200],
+        ],
+        end: [378, 574]
+      }
+    }]
   },
   {
     posX: 1,
@@ -25,7 +36,18 @@ const process = [
     fp: 10,
     saz: 10,
     sez: 22,
-    arrowTo: ["I"]
+    // arrowTo: ["I"]
+    // arrowTo: [{
+    //   id: "III",
+    //   pathCoords: {
+    //     start: [150, 250],
+    //     breakpoints: [
+    //       [150, 300],
+    //       [300, 300],
+    //     ],
+    //     end: [200, 300]
+    //   }
+    // }]
   },
   {
     posX: 1,
@@ -39,7 +61,7 @@ const process = [
     fp: 0,
     saz: 4,
     sez: 7,
-    arrowTo: ["E"]
+    // arrowTo: ["E"]
   },
   {
     posX: 2,
@@ -53,7 +75,7 @@ const process = [
     fp: 0,
     saz: 5,
     sez: 14,
-    arrowTo: ["G", "H"]
+    // arrowTo: ["G", "H"]
   },
   {
     posX: 2,
@@ -67,7 +89,7 @@ const process = [
     fp: 0,
     saz: 7,
     sez: 11,
-    arrowTo: ["F", "G"]
+    // arrowTo: ["F", "G"]
   },
   {
     posX: 3,
@@ -81,7 +103,7 @@ const process = [
     fp: 3,
     saz: 11,
     sez: 15,
-    arrowTo: ["H"]
+    // arrowTo: ["H"]
   },
   {
     posX: 3,
@@ -95,7 +117,7 @@ const process = [
     fp: 0,
     saz: 14,
     sez: 22,
-    arrowTo: ["I"]
+    // arrowTo: ["I"]
   },
   {
     posX: 4,
@@ -109,7 +131,7 @@ const process = [
     fp: 0,
     saz: 15,
     sez: 25,
-    arrowTo: ["J"]
+    // arrowTo: ["J"]
   },
   {
     posX: 3,
@@ -123,7 +145,7 @@ const process = [
     fp: 0,
     saz: 22,
     sez: 31,
-    arrowTo: ["K"]
+    // arrowTo: ["K"]
   },
   {
     posX: 5,
@@ -137,7 +159,7 @@ const process = [
     fp: 1,
     saz: 25,
     sez: 31,
-    arrowTo: ["K"]
+    // arrowTo: ["K"]
   },
   {
     posX: 5,
