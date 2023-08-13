@@ -5,6 +5,7 @@ import process from './datas/process'
 import { IStep } from './components/Step'
 import MousePosition from './components/MousePosition';
 import { useEffect, useState } from 'react';
+import Arrow2 from './components/Arrow2';
 
 function App() {
 
@@ -12,33 +13,65 @@ function App() {
   const [mouseVerticalPosition, setMouseVerticalPosition] = useState(0)
 
   const [selectedArrows, setSelectedArrows] = useState<string[]>([])
+  const fields = ['faz', 'fez', 'gp', 'fp', 'saz', 'sez']
 
   const [excersice, setExcersice] = useState<IStep[]>([]) 
-  const [difficulty, setDifficulty] = useState(0.7) // 1, 1.5, 2.3, 3.5
+  const [errors, setErrors] = useState<string[]>([])
+  const difficulties: number[] = [4, 2, 1]
+  const [selectedDifficulty, setSelectedDifficulty] = useState<number>(difficulties[0])
+  const [bools, setBools] = useState<boolean[]>([])
 
-  const genRantomBool = () => {
-    return Math.random() < difficulty / 10 * 2
+  const getRandomBool = () => {
+    return Math.random() < selectedDifficulty / 10 * 3
+  }
+
+  const get6RandomBools = () => {
+    let bools: boolean[] = []
+    let count = 0
+    for (let i = 0; i < 6; i++) {
+      if (Math.random() < 0.5) {
+        bools.push(true)
+        count++
+      } else {
+        bools.push(false)
+        count++
+      }
+    }
+    setBools(bools)
   }
 
   const setGame = () => {
-    let newProcess = [...process]
-    newProcess.map((step: IStep) => {
-      genRantomBool() ? step.faz = '' : null
-      genRantomBool() ? step.fez = '' : null
-      genRantomBool() ? step.gp = '' : null
-      genRantomBool() ? step.fp = '' : null
-      genRantomBool() ? step.saz = '' : null
-      genRantomBool() ? step.sez = '' : null
+    // In order to clone the process array properly, we need to stringify it and parse it back to JSON
+    let newProcess = JSON.parse(JSON.stringify(process))
+    newProcess.forEach((step: IStep) => {
+
+      // get6RandomBools()
+      // console.log(bools)
+      // bools[0] ? step.faz = '' : null
+      // bools[1] ? step.fez = '' : null
+      // bools[2] ? step.gp  = '' : null
+      // bools[3] ? step.fp = '' : null
+      // bools[4] ? step.saz = '' : null
+      // bools[5] ? step.sez = '' : null
+      // setBools([])
+
+
+      getRandomBool() ? step.faz = '' : null
+      getRandomBool() ? step.fez = '' : null
+      getRandomBool() ? step.gp = '' : null
+      getRandomBool() ? step.fp = '' : null
+      getRandomBool() ? step.saz = '' : null
+      getRandomBool() ? step.sez = '' : null
     })
     setExcersice(newProcess)
   }
 
   useEffect(() => {
     setGame()
-  }, [difficulty])
+  }, [selectedDifficulty])
 
   useEffect(() => {
-    console.log(selectedArrows)
+    // console.log(selectedArrows)
   }, [selectedArrows])
 
   const handleArrowClick = (arrowId: string) => {
@@ -51,19 +84,66 @@ function App() {
 
   const handleCheck = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    console.log(excersice[0].faz)
-    console.log(process[0].faz)
+    // console.log(document.getElementById('A-faz')?.value)
+    // let newErrors = [...process]
+    let newErrors: any = []
+    setErrors(newErrors)
+    process.forEach((origVals: any, index: number) => {
+      fields.map((field: string) => {
+        const actualVal: string | number | undefined = (document.getElementById(`${origVals.ps}-${field}`) as HTMLInputElement)?.value
+        console.log(actualVal, Number(origVals[field]))
+        // if (Number(actualVal) !== origVals[field]) {
+        if (Number(actualVal) !== Number(origVals[field]) || actualVal === '') {
+          newErrors.push(`${origVals.ps}-${field}`)
+        }
+      }) 
+    })
+    setErrors(newErrors)
+  }
+
+  const resetFields = () => {
+    process.forEach((origVals: any, index: number) => {
+      fields.forEach((field: string) => {
+        const input = document.getElementById(`${origVals.ps}-${field}`) as HTMLInputElement
+        if (input && input.value !== '') {
+          input.value = ''
+        }
+      })
+    })
   }
 
   const handleSelectChange: React.ChangeEventHandler<HTMLSelectElement> = (event) => {
-    setDifficulty(Number(event.target.value))
+    // resetFields()
+    // setErrors([])
+    // setSelectedDifficulty(difficulties[Number(event.target.value)])
     // setGame()
+
+    const userConfirmed = confirm('Willst Du wirklich die aktuelle Aufgabe abbrechen?')
+
+    if (userConfirmed) {
+      console.log(event.target.value)
+      resetFields()
+      // setTimeout(() => {
+        setSelectedDifficulty(-1)
+        setSelectedDifficulty(difficulties[Number(event.target.value)])
+        setErrors([])
+        setGame()
+      // }, 500)
+    } else {
+      console.log('not confirmed')
+    }
   };
 
   useEffect(() => {
     setGame()
-    console.log(difficulty)
-  }, [difficulty])
+    // console.log('game set')
+  }, [])
+
+  useEffect(() => {
+    // console.log(errors);
+    // console.log(excersice)
+    // console.log(process)
+  }, [errors]);
 
   useEffect(() => {
 
@@ -82,14 +162,23 @@ function App() {
           className="absolute left-0 top-0 w-[100vw] h-[100vh] z-0"
           id="arrows-layer"
         >
-          <Arrows
+        {excersice.map((step, index) => (
+          <Arrow2
+            key={index}
+            id={`bla-${index}`}
+            arrowTo={step.arrowTo}
+            // posX={step.posX}
+          />
+        ))}
+
+          {/* <Arrows
             posX={process[0].posX}
             posY={process[0].posY}
             arrowTo={process[0].arrowTo}
             size={50}
             posStep={280} 
             handleArrowClick={handleArrowClick}
-          />   
+          />    */}
         </div>
         <form action="" onSubmit={handleCheck}>
           {excersice.map((step, index) => (
@@ -107,6 +196,7 @@ function App() {
               saz={step.saz}
               sez={step.sez}
               arrowTo={step.arrowTo && step.arrowTo}
+              errors={errors}
             />
           ))}
           <div className="absolute right-0 top-0 w-[150px]">
@@ -115,11 +205,10 @@ function App() {
                 mouseHorizontalPosition={mouseHorizontalPosition}
                 mouseVerticalPosition={mouseVerticalPosition}
               />
-              <select name="" id="" className="select select-sm bg-transparent border-[white] hover:border-[yellow] text-[white] select-bordered mt-3" onChange={handleSelectChange}>
-                <option className="text-[#000]" value="1">Loki</option>
-                <option className="text-[#000]" value="1.5">Doctor Octopus</option>
-                <option className="text-[#000]" value="2.3">Ultron</option>
-                <option className="text-[#000]" value="3.5">Thanos</option>
+              <select name="" id="" className="select select-sm bg-transparent dark:border-[white] hover:border-[yellow] dark:text-[white] select-bordered mt-3" onChange={handleSelectChange}>
+                <option className="text-[#000]" value="0">Thanos</option>
+                <option className="text-[#000]" value="1">Ultron</option>
+                <option className="text-[#000]" value="2">Loki</option>
               </select>
               <button className="btn btn-sm bg-transparent border border-[white] hover:border-[yellow] mt-3 z-[300]">check</button>
             </div>
